@@ -36,8 +36,14 @@ func (m *UserBadgetAssetModel) Update(userBadgetAsset *data.UserBadgetAsset) err
 }
 
 // GetBadgetsByUser .
-func (m *UserBadgetAssetModel) GetBadgetAssetsByUser(userID int64) ([]data.UserBadgetAsset, error) {
+func (m *UserBadgetAssetModel) GetBadgetAssetsByUser(userID int64, category string) ([]data.UserBadgetAsset, error) {
 	var userBadgetAssets []data.UserBadgetAsset
-	err := m.db.Model(data.UserBadgetAsset{UserID: userID}).Preload("Badget", "Status = ?", badget.Published).Find(&userBadgetAssets).Error
+	db := m.db.Model(data.UserBadgetAsset{UserID: userID})
+	if category != "" {
+		db = db.Debug().InnerJoins("Badget").Where("Badget.Status = ? and Badget.Category = ?", badget.Published, category)
+	} else {
+		db = db.Debug().InnerJoins("Badget").Where("Badget.Status = ?", badget.Published)
+	}
+	err := db.Where("current_state = -1").Find(&userBadgetAssets).Error
 	return userBadgetAssets, err
 }

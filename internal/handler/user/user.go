@@ -45,10 +45,12 @@ func (s *Handler) ListBadgetAssets(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	badgetList, err := s.userService.ListBadgetAssets(userID)
+	category, _ := c.GetQuery("category")
+	badgetList, err := s.userService.ListBadgetAssets(userID, category)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
 	}
 	handler.SuccessRequest(c, badgetList)
+	return
 }

@@ -54,12 +54,12 @@ func (s *Service) HandleBehavior(ub *user.Behavior) error {
 	return nil
 }
 
-func (s *Service) ListBadgetAssets(userID int64) ([]data.Badget, error) {
-	badgetAssets, err := s.userBadgetAssetModel.GetBadgetAssetsByUser(userID)
+func (s *Service) ListBadgetAssets(userID int64, category string) ([]data.Badget, error) {
+	badgetAssets, err := s.userBadgetAssetModel.GetBadgetAssetsByUser(userID, category)
 	if err != nil {
 		return nil, nil
 	}
-	var badgets []data.Badget
+	badgets := make([]data.Badget, 0)
 	for _, badgetAsset := range badgetAssets {
 		badgets = append(badgets, badgetAsset.Badget)
 	}

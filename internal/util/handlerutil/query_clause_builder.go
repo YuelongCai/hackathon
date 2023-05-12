@@ -80,8 +80,7 @@ func buildFilterClause(c *gin.Context, table string) (string, map[string]interfa
 	var filterClauses []string
 	paramMap := make(map[string]interface{})
 	idx := 0
-	likeParamsMap := map[string]string{"name": "name", "description": "description",
-		"owner": "owner"}
+	likeParamsMap := map[string]string{"name": "name", "description": "description", "category": "category", "rarity": "rarity", "status": "status"}
 	processLikeOrFilters(c, &filterClauses, paramMap, &idx, likeParamsMap, table)
 	equalParamsMap := map[string]string{}
 	processCompareOrFilters(c, "=", &filterClauses, paramMap, &idx, equalParamsMap, table)
