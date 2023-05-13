@@ -40,7 +40,7 @@ func initConf() {
 	if e, f := os.LookupEnv(confDir); f {
 		log.Printf("load configs from %s\n", e)
 		appConf = &conf.AppConf{}
-		config.NewConfig(e, "dag", appConf)
+		config.NewConfig(e, "hackson", appConf)
 		log.Printf("load conf success, %+v\n", appConf)
 	} else {
 		panic("Error on loading configs, please feed CONF_DIR environment!")
