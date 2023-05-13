@@ -1,4 +1,4 @@
-package badget
+package badge
 
 import (
 	"net/http"
@@ -6,61 +6,61 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 
-	badgetC "hackson/internal/data/constant/badget"
+	badgeC "hackson/internal/data/constant/badge"
 	"hackson/internal/handler"
 	"hackson/internal/model/rds/data"
-	"hackson/internal/service/badget"
+	"hackson/internal/service/badge"
 	"hackson/internal/util/handlerutil"
 )
 
-// Handler for badget
+// Handler for badge
 type Handler struct {
-	badgetService *badget.Service
+	badgeService *badge.Service
 }
 
 // NewHandler .
-func NewHandler(bs *badget.Service) *Handler {
-	return &Handler{badgetService: bs}
+func NewHandler(bs *badge.Service) *Handler {
+	return &Handler{badgeService: bs}
 }
 
 // ListRes for list dag response body
 type ListRes struct {
-	Badgets []data.Badget `json:"badgets"`
+	Badges []data.Badge `json:"badges"`
 	Total   int64         `json:"totalItems"`
 }
 
-// List Badget
+// List Badge
 func (s *Handler) List(c *gin.Context) {
-	filterClause, paramMap, orderClause, offset, limit, err := handlerutil.BuildQueryClause(c, "badget")
+	filterClause, paramMap, orderClause, offset, limit, err := handlerutil.BuildQueryClause(c, "badge")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	var badgetListRes ListRes
-	badgetList, err := s.badgetService.ListByFilterAndOrder(filterClause, paramMap, orderClause, offset, limit)
+	var badgeListRes ListRes
+	badgeList, err := s.badgeService.ListByFilterAndOrder(filterClause, paramMap, orderClause, offset, limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	badgetListRes.Badgets = badgetList
-	totalCount, err := s.badgetService.CountByFilter(filterClause, paramMap)
+	badgeListRes.Badges = badgeList
+	totalCount, err := s.badgeService.CountByFilter(filterClause, paramMap)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	badgetListRes.Total = totalCount
-	handler.SuccessRequest(c, badgetListRes)
+	badgeListRes.Total = totalCount
+	handler.SuccessRequest(c, badgeListRes)
 }
 
-// Register a Badget
+// Register a Badge
 func (s *Handler) Register(c *gin.Context) {
-	var req data.Badget
+	var req data.Badge
 	err := c.ShouldBindBodyWith(&req, binding.JSON)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
 	}
-	err = s.badgetService.Register(&req)
+	err = s.badgeService.Register(&req)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
@@ -68,15 +68,15 @@ func (s *Handler) Register(c *gin.Context) {
 	handler.SuccessRequest(c, req)
 }
 
-// Change a Badget
+// Change a Badge
 func (s *Handler) Change(c *gin.Context) {
-	var req data.Badget
+	var req data.Badge
 	err := c.ShouldBindBodyWith(&req, binding.JSON)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
 	}
-	err = s.badgetService.Change(&req)
+	err = s.badgeService.Change(&req)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
@@ -84,12 +84,12 @@ func (s *Handler) Change(c *gin.Context) {
 	handler.SuccessRequest(c, req)
 }
 
-// ListBadgetCategories .
-func (s *Handler) ListBadgetCategories(c *gin.Context) {
-	handler.SuccessRequest(c, badgetC.GetCategory())
+// ListBadgeCategories .
+func (s *Handler) ListBadgeCategories(c *gin.Context) {
+	handler.SuccessRequest(c, badgeC.GetCategory())
 }
 
-// ListBadgetTriggerEvents .
-func (s *Handler) ListBadgetTriggerEvents(c *gin.Context) {
-	handler.SuccessRequest(c, badgetC.GetTriggerEvent())
+// ListBadgeTriggerEvents .
+func (s *Handler) ListBadgeTriggerEvents(c *gin.Context) {
+	handler.SuccessRequest(c, badgeC.GetTriggerEvent())
 }

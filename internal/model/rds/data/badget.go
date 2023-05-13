@@ -2,8 +2,8 @@ package data
 
 import "time"
 
-// Badget record of table `badget`
-type Badget struct {
+// Badge record of table `badge`
+type Badge struct {
 	ID int64 `json:"id,omitempty"`
 
 	Name         string `json:"name"`
@@ -19,7 +19,7 @@ type Badget struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// TableName of `badget`
-func (r *Badget) TableName() string {
-	return "badget"
+// TableName of `badge`
+func (r *Badge) TableName() string {
+	return "badge"
 }

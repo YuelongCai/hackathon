@@ -11,37 +11,37 @@ import (
 // Service for user
 type Service struct {
 	rds                  *rds.Rds
-	badgetModel          *rds.BadgetModel
-	userBadgetAssetModel *rds.UserBadgetAssetModel
+	badgeModel          *rds.BadgeModel
+	userBadgeAssetModel *rds.UserBadgeAssetModel
 }
 
 // NewService .
-func NewService(rds *rds.Rds, bm *rds.BadgetModel, ubam *rds.UserBadgetAssetModel) *Service {
-	return &Service{rds: rds, badgetModel: bm, userBadgetAssetModel: ubam}
+func NewService(rds *rds.Rds, bm *rds.BadgeModel, ubam *rds.UserBadgeAssetModel) *Service {
+	return &Service{rds: rds, badgeModel: bm, userBadgeAssetModel: ubam}
 }
 
 // HandleBehavior .
 func (s *Service) HandleBehavior(ub *user.Behavior) error {
-	badgets, err := s.badgetModel.FetchByTriggerEvent(ub.EventName)
+	badges, err := s.badgeModel.FetchByTriggerEvent(ub.EventName)
 	if err != nil {
 		return err
 	}
-	for _, badget := range badgets {
+	for _, badge := range badges {
 		err = s.rds.Transaction(func(tx *gorm.DB) error {
-			userBadgetAsset, err := s.userBadgetAssetModel.WithTx(tx).Get(ub.UserID, badget.ID)
+			userBadgeAsset, err := s.userBadgeAssetModel.WithTx(tx).Get(ub.UserID, badge.ID)
 			if err != nil {
 				return err
 			}
-			if userBadgetAsset.CurrentState == -1 {
+			if userBadgeAsset.CurrentState == -1 {
 				// already finish all condition, return
 				return nil
-			} else if userBadgetAsset.CurrentState+ub.Count >= badget.Condition {
-				userBadgetAsset.CurrentState = -1
+			} else if userBadgeAsset.CurrentState+ub.Count >= badge.Condition {
+				userBadgeAsset.CurrentState = -1
 			} else {
-				// userBadgetAsset.CurrentState + ub.Count < badget.Condition
-				userBadgetAsset.CurrentState += ub.Count
+				// userBadgeAsset.CurrentState + ub.Count < badge.Condition
+				userBadgeAsset.CurrentState += ub.Count
 			}
-			err = s.userBadgetAssetModel.WithTx(tx).Update(userBadgetAsset)
+			err = s.userBadgeAssetModel.WithTx(tx).Update(userBadgeAsset)
 			if err != nil {
 				return err
 			}
@@ -54,14 +54,14 @@ func (s *Service) HandleBehavior(ub *user.Behavior) error {
 	return nil
 }
 
-func (s *Service) ListBadgetAssets(userID int64, category string) ([]data.Badget, error) {
-	badgetAssets, err := s.userBadgetAssetModel.GetBadgetAssetsByUser(userID, category)
+func (s *Service) ListBadgeAssets(userID int64, category string) ([]data.Badge, error) {
+	badgeAssets, err := s.userBadgeAssetModel.GetBadgeAssetsByUser(userID, category)
 	if err != nil {
 		return nil, nil
 	}
-	badgets := make([]data.Badget, 0)
-	for _, badgetAsset := range badgetAssets {
-		badgets = append(badgets, badgetAsset.Badget)
+	badges := make([]data.Badge, 0)
+	for _, badgeAsset := range badgeAssets {
+		badges = append(badges, badgeAsset.Badge)
 	}
-	return badgets, nil
+	return badges, nil
 }

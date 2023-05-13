@@ -1,4 +1,4 @@
-package badget
+package badge
 
 const (
 	Behavior = "BEHAVIOR"

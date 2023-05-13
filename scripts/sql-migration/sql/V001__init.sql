@@ -1,4 +1,4 @@
-CREATE TABLE `badget`
+CREATE TABLE `badge`
 (
     `id`            BIGINT PRIMARY KEY AUTO_INCREMENT,
     `name`          VARCHAR(64) NOT NULL,
@@ -17,11 +17,11 @@ CREATE TABLE `badget`
     `updated_at`    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `user_badget_asset`
+CREATE TABLE `user_badge_asset`
 (
     `id`            BIGINT PRIMARY KEY AUTO_INCREMENT,
     `user_id`       BIGINT    NOT NULL,
-    `badget_id`     BIGINT    NOT NULL,
+    `badge_id`     BIGINT    NOT NULL,
     `current_state` INT       NOT NULL,
     `created_at`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

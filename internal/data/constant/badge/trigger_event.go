@@ -1,4 +1,4 @@
-package badget
+package badge
 
 const (
 	WatchedVideo = "watched_video"

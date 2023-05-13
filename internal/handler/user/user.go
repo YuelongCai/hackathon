@@ -37,8 +37,8 @@ func (s *Handler) HandleBehavior(c *gin.Context) {
 	handler.SuccessRequest(c, nil)
 }
 
-// ListBadgetAssets .
-func (s *Handler) ListBadgetAssets(c *gin.Context) {
+// ListBadgeAssets .
+func (s *Handler) ListBadgeAssets(c *gin.Context) {
 	userIDStr := c.Param("user_id")
 	userID, err := strconv.ParseInt(userIDStr, 10, 64)
 	if err != nil {
@@ -46,11 +46,11 @@ func (s *Handler) ListBadgetAssets(c *gin.Context) {
 		return
 	}
 	category, _ := c.GetQuery("category")
-	badgetList, err := s.userService.ListBadgetAssets(userID, category)
+	badgeList, err := s.userService.ListBadgeAssets(userID, category)
 	if err != nil {
 		handler.BadRequest(c, err.Error())
 		return
 	}
-	handler.SuccessRequest(c, badgetList)
+	handler.SuccessRequest(c, badgeList)
 	return
 }

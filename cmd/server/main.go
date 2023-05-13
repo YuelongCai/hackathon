@@ -8,10 +8,10 @@ import (
 
 	"hackson/internal/data/conf"
 	"hackson/internal/data/config"
-	badgetH "hackson/internal/handler/badget"
+	badgeH "hackson/internal/handler/badge"
 	userH "hackson/internal/handler/user"
 	"hackson/internal/model/rds"
-	badgetS "hackson/internal/service/badget"
+	badgeS "hackson/internal/service/badge"
 	userS "hackson/internal/service/user"
 )
 
@@ -24,13 +24,13 @@ var (
 
 	rdsConn *rds.Rds
 
-	badgetModel          *rds.BadgetModel
-	userBadgetAssetModel *rds.UserBadgetAssetModel
+	badgeModel          *rds.BadgeModel
+	userBadgeAssetModel *rds.UserBadgeAssetModel
 
-	badgetService *badgetS.Service
+	badgeService *badgeS.Service
 	userService   *userS.Service
 
-	badgetHandler *badgetH.Handler
+	badgeHandler *badgeH.Handler
 	userHandler   *userH.Handler
 )
 
@@ -54,31 +54,31 @@ func initDB() {
 		panic(err)
 	}
 
-	badgetModel = rds.NewBadgetModel(rdsConn)
-	userBadgetAssetModel = rds.NewUserBadgetAssetModel(rdsConn)
+	badgeModel = rds.NewBadgeModel(rdsConn)
+	userBadgeAssetModel = rds.NewUserBadgeAssetModel(rdsConn)
 }
 
 func initService() {
-	badgetService = badgetS.NewService(badgetModel)
-	userService = userS.NewService(rdsConn, badgetModel, userBadgetAssetModel)
+	badgeService = badgeS.NewService(badgeModel)
+	userService = userS.NewService(rdsConn, badgeModel, userBadgeAssetModel)
 }
 
 func initHandler() {
-	badgetHandler = badgetH.NewHandler(badgetService)
+	badgeHandler = badgeH.NewHandler(badgeService)
 	userHandler = userH.NewHandler(userService)
 }
 
 func initRoute() {
 	r := gin.New()
 
-	r.GET("/api/v1/badget", badgetHandler.List)
-	r.POST("/api/v1/badget", badgetHandler.Register)
-	r.PUT("/api/v1/badget", badgetHandler.Change)
-	r.GET("/api/v1/badget_category", badgetHandler.ListBadgetCategories)
-	r.GET("/api/v1/badget_trigger_event", badgetHandler.ListBadgetTriggerEvents)
+	r.GET("/api/v1/badge", badgeHandler.List)
+	r.POST("/api/v1/badge", badgeHandler.Register)
+	r.PUT("/api/v1/badge", badgeHandler.Change)
+	r.GET("/api/v1/badge_category", badgeHandler.ListBadgeCategories)
+	r.GET("/api/v1/badge_trigger_event", badgeHandler.ListBadgeTriggerEvents)
 
 	r.POST("/api/v1/user_behavior", userHandler.HandleBehavior)
-	r.GET("/api/v1/user_badget_asset/:user_id", userHandler.ListBadgetAssets)
+	r.GET("/api/v1/user_badge_asset/:user_id", userHandler.ListBadgeAssets)
 
 	if err := r.Run(); err != nil {
 		panic(err)
