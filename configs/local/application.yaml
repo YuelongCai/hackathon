@@ -6,3 +6,5 @@ mysql:
   parameters:
     - key: parseTime
       value: "true"
+    - key: loc
+      value: "Local"

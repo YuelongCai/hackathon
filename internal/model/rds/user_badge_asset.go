@@ -25,7 +25,7 @@ func (m *UserBadgeAssetModel) WithTx(tx *gorm.DB) *UserBadgeAssetModel {
 // Get one record
 func (m *UserBadgeAssetModel) Get(userID, badgeID int64) (*data.UserBadgeAsset, error) {
 	userBadgeAsset := data.UserBadgeAsset{UserID: userID, BadgeID: badgeID}
-	err := m.db.Model(data.UserBadgeAsset{}).FirstOrCreate(&userBadgeAsset).Error
+	err := m.db.Debug().Where(data.UserBadgeAsset{UserID: userID, BadgeID: badgeID}).FirstOrCreate(&userBadgeAsset).Error
 	return &userBadgeAsset, err
 }
 

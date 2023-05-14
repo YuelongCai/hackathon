@@ -2,7 +2,7 @@ CREATE TABLE `badge`
 (
     `id`            BIGINT PRIMARY KEY AUTO_INCREMENT,
     `name`          VARCHAR(64) NOT NULL,
-    `image`         TEXT NOT NULL,
+    `image`         LONGTEXT NOT NULL,
 
     `category`      VARCHAR(64) NOT NULL,
     `description`   VARCHAR(64) NOT NULL,
