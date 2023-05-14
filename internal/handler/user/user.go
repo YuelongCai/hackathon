@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	userD "hackson/internal/data/user"
-	"hackson/internal/handler"
-	userS "hackson/internal/service/user"
+	userD "hackathon/internal/data/user"
+	"hackathon/internal/handler"
+	userS "hackathon/internal/service/user"
 )
 
 // Handler for user

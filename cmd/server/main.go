@@ -6,13 +6,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"hackson/internal/data/conf"
-	"hackson/internal/data/config"
-	badgeH "hackson/internal/handler/badge"
-	userH "hackson/internal/handler/user"
-	"hackson/internal/model/rds"
-	badgeS "hackson/internal/service/badge"
-	userS "hackson/internal/service/user"
+	"hackathon/internal/data/conf"
+	"hackathon/internal/data/config"
+	badgeH "hackathon/internal/handler/badge"
+	userH "hackathon/internal/handler/user"
+	"hackathon/internal/model/rds"
+	badgeS "hackathon/internal/service/badge"
+	userS "hackathon/internal/service/user"
 )
 
 const (
@@ -28,10 +28,10 @@ var (
 	userBadgeAssetModel *rds.UserBadgeAssetModel
 
 	badgeService *badgeS.Service
-	userService   *userS.Service
+	userService  *userS.Service
 
 	badgeHandler *badgeH.Handler
-	userHandler   *userH.Handler
+	userHandler  *userH.Handler
 )
 
 // export CONF_DIR=configs/local
@@ -40,7 +40,7 @@ func initConf() {
 	if e, f := os.LookupEnv(confDir); f {
 		log.Printf("load configs from %s\n", e)
 		appConf = &conf.AppConf{}
-		config.NewConfig(e, "hackson", appConf)
+		config.NewConfig(e, "hackathon", appConf)
 		log.Printf("load conf success, %+v\n", appConf)
 	} else {
 		panic("Error on loading configs, please feed CONF_DIR environment!")

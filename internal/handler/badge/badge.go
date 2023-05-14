@@ -6,11 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 
-	badgeC "hackson/internal/data/constant/badge"
-	"hackson/internal/handler"
-	"hackson/internal/model/rds/data"
-	"hackson/internal/service/badge"
-	"hackson/internal/util/handlerutil"
+	badgeC "hackathon/internal/data/constant/badge"
+	"hackathon/internal/handler"
+	"hackathon/internal/model/rds/data"
+	"hackathon/internal/service/badge"
+	"hackathon/internal/util/handlerutil"
 )
 
 // Handler for badge
@@ -26,7 +26,7 @@ func NewHandler(bs *badge.Service) *Handler {
 // ListRes for list dag response body
 type ListRes struct {
 	Badges []data.Badge `json:"badges"`
-	Total   int64         `json:"totalItems"`
+	Total  int64        `json:"totalItems"`
 }
 
 // List Badge

@@ -2,15 +2,15 @@ package user
 
 import (
 	"gorm.io/gorm"
-	"hackson/internal/model/rds/data"
+	"hackathon/internal/model/rds/data"
 
-	"hackson/internal/data/user"
-	"hackson/internal/model/rds"
+	"hackathon/internal/data/user"
+	"hackathon/internal/model/rds"
 )
 
 // Service for user
 type Service struct {
-	rds                  *rds.Rds
+	rds                 *rds.Rds
 	badgeModel          *rds.BadgeModel
 	userBadgeAssetModel *rds.UserBadgeAssetModel
 }

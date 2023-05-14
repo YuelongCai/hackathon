@@ -2,9 +2,9 @@ package rds
 
 import (
 	"gorm.io/gorm"
-	"hackson/internal/data/constant/badge"
+	"hackathon/internal/data/constant/badge"
 
-	"hackson/internal/model/rds/data"
+	"hackathon/internal/model/rds/data"
 )
 
 // UserBadgeAssetModel for table `user_badge_asset`

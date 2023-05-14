@@ -3,9 +3,9 @@ package rds
 import (
 	"gorm.io/gorm"
 
-	"hackson/internal/data/constant/badge"
-	"hackson/internal/model/rds/data"
-	"hackson/internal/util/ormutil"
+	"hackathon/internal/data/constant/badge"
+	"hackathon/internal/model/rds/data"
+	"hackathon/internal/util/ormutil"
 )
 
 // BadgeModel for table `badge`

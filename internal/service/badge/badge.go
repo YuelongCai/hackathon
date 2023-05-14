@@ -1,8 +1,8 @@
 package badge
 
 import (
-	"hackson/internal/model/rds"
-	"hackson/internal/model/rds/data"
+	"hackathon/internal/model/rds"
+	"hackathon/internal/model/rds/data"
 )
 
 // Service for badge
