@@ -1,10 +1,12 @@
 package badge
 
 const (
-	WatchedVideo = "watched_video"
-	LoggedIn     = "logged_in"
+	Login            = "login"
+	BirthdayLogin    = "birthday_login"
+	AnniversaryLogin = "anniversary_login"
+	WatchVideo       = "watch_video"
 )
 
 func GetTriggerEvent() []string {
-	return []string{WatchedVideo, LoggedIn}
+	return []string{Login, BirthdayLogin, AnniversaryLogin, WatchVideo}
 }

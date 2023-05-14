@@ -1,6 +1,7 @@
 package badge
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -60,6 +61,7 @@ func (s *Handler) Register(c *gin.Context) {
 		handler.BadRequest(c, err.Error())
 		return
 	}
+	fmt.Printf("request %v\n", req)
 	err = s.badgeService.Register(&req)
 	if err != nil {
 		handler.BadRequest(c, err.Error())

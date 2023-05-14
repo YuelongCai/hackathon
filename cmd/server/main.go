@@ -68,9 +68,27 @@ func initHandler() {
 	userHandler = userH.NewHandler(userService)
 }
 
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Allow-Headers", "*")
+		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
+}
+
 func initRoute() {
 	r := gin.New()
 
+	r.Use(CORSMiddleware())
 	r.GET("/api/v1/badge", badgeHandler.List)
 	r.POST("/api/v1/badge", badgeHandler.Register)
 	r.PUT("/api/v1/badge", badgeHandler.Change)
@@ -83,6 +101,13 @@ func initRoute() {
 	if err := r.Run(); err != nil {
 		panic(err)
 	}
+
+	//server := http.Server{
+	//	Handler: r,
+	//}
+	//// if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
+	//	panic(err)
+	//}
 }
 
 func main() {

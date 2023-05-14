@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/hackson.iml" filepath="$PROJECT_DIR$/hackson.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hackathon.iml" filepath="$PROJECT_DIR$/hackathon.iml" />
     </modules>
   </component>
 </project>
